@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seshat Infotech · Option B: Midnight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #F4F0E3;
+    --ivory-2: #E8E3D1;
+    --ink: #0A0E16;
+    --ink-2: #131928;
+    --muted: #55596A;
+    --muted-dark: #A9ADBA;
+    --lime: #C6FF2B;
+    --display: 'Unbounded', system-ui, sans-serif;
+    --body: 'Manrope', system-ui, sans-serif;
+    --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ink); color: var(--ivory); font: 1.0625rem/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+  .wrap { padding-inline: var(--gutter); max-width: 90rem; margin-inline: auto; }
+  .btn { display: inline-block; background: var(--lime); color: var(--ink); font: 700 .95rem/1 var(--body); padding: 1rem 1.5rem; border-radius: 999px; text-decoration: none; transition: transform .15s, box-shadow .15s; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -6px rgba(198,255,43,.55); }
+  .btn--ghost { background: transparent; color: var(--ivory); box-shadow: inset 0 0 0 1.5px rgba(244,240,227,.5); }
+  .btn--ghost:hover { box-shadow: inset 0 0 0 1.5px var(--ivory); }
+  .btn--ink { background: var(--ink); color: var(--ivory); }
+  .btn--ink:hover { box-shadow: 0 8px 24px -6px rgba(10,14,22,.5); }
+
+  /* Nav */
+  .nav { position: absolute; inset: 0 0 auto 0; z-index: 3; }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; padding-block: 1.4rem; }
+  .brand { display: flex; align-items: center; gap: .7rem; font: 500 1rem/1 var(--display); text-decoration: none; }
+  .brand svg { width: 1.9rem; height: 1.9rem; }
+  .brand .star-shape { fill: var(--lime); }
+  .nav ul { display: flex; align-items: center; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+  .nav a:not(.btn) { text-decoration: none; font-weight: 500; color: var(--muted-dark); }
+  .nav a:not(.btn):hover { color: var(--ivory); }
+  .nav .btn { padding: .8rem 1.2rem; }
+  @media (max-width: 40rem) { .nav li:not(:last-child) { display: none; } }
+
+  /* Hero: the star draws itself once, then turns slowly. That is the only movement. */
+  .hero { position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; }
+  .hero .wrap { position: relative; z-index: 2; width: 100%; padding-block: 8rem 6rem; }
+  h1 { font: 700 clamp(2.6rem, 7.4vw, 6.4rem)/1.02 var(--display); letter-spacing: -.045em; max-width: 11ch; }
+  .lede { max-width: 33rem; margin-top: 1.8rem; color: var(--muted-dark); font-size: clamp(1.05rem, 1.5vw, 1.2rem); }
+  .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2.2rem; }
+  .emblem { position: absolute; z-index: 1; right: max(-3vmin, -2rem); top: 50%; width: min(68vmin, 42rem); aspect-ratio: 1; transform: translateY(-50%); }
+  .emblem svg { width: 100%; height: 100%; overflow: visible; }
+  .emblem .spin { transform-origin: 100px 100px; animation: spin 140s linear infinite; }
+  .draw { fill: none; stroke: var(--lime); stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.4s .2s cubic-bezier(.5,0,.2,1) forwards; }
+  .draw--b { stroke: rgba(244,240,227,.28); animation-delay: .8s; }
+  .ring { fill: none; stroke: rgba(244,240,227,.14); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 52rem) { .emblem { opacity: .35; right: -22vmin; width: 100vmin; } }
+  .quick { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; border-top: 1px solid rgba(244,240,227,.14); }
+  .quick .wrap { display: flex; flex-wrap: wrap; gap: .5rem 2.5rem; padding-block: 1.2rem; }
+  .quick a { text-decoration: none; font: 500 .9rem/1 var(--display); color: var(--muted-dark); padding-block: .4rem; }
+  .quick a:hover { color: var(--lime); }
+  .quick a.next { opacity: .6; }
+
+  /* Products */
+  .products { background: var(--ivory); color: var(--ink); padding-block: clamp(4rem, 9vw, 8rem); }
+  .products :focus-visible { outline-color: var(--ink); }
+  h2 { font: 700 clamp(1.9rem, 4.2vw, 3.4rem)/1.05 var(--display); letter-spacing: -.04em; }
+  .products .head { display: flex; flex-wrap: wrap; gap: 1rem 3rem; align-items: end; justify-content: space-between; margin-bottom: clamp(2rem, 5vw, 4rem); }
+  .products .head p { color: var(--muted); max-width: 24rem; }
+  .panel { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: center; padding: clamp(1rem, 2vw, 1.5rem); border: 1.5px solid var(--ink); border-radius: 2rem; margin-top: 1.25rem; background: #FBF9F1; }
+  .panel:nth-of-type(even) .copy { order: 2; }
+  .copy { padding: clamp(.5rem, 3vw, 2.5rem); }
+  .copy h3 { font: 700 clamp(2rem, 4vw, 3.2rem)/1 var(--display); letter-spacing: -.045em; }
+  .copy .tag { margin-top: 1rem; font: 700 1.15rem/1.3 var(--body); }
+  .copy .desc { margin-top: .8rem; color: var(--muted); max-width: 28rem; }
+  .copy .btn { margin-top: 1.6rem; }
+  .art { --art-line: var(--ivory); --art-soft: rgba(244,240,227,.12); --art-hi: var(--lime); --art-bg: var(--ink); background: var(--ink); border-radius: 1.4rem; padding: clamp(1rem, 3vw, 2.5rem); display: grid; place-items: center; min-height: 20rem; }
+  .art svg { width: 100%; max-width: 26rem; height: auto; }
+  .panel--next { grid-template-columns: 1fr; border-style: dashed; border-color: var(--muted); background: transparent; }
+  .panel--next .copy h3 { color: var(--muted); }
+  .dot { display: inline-block; width: .7rem; height: .7rem; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 2px var(--ink); margin-right: .6rem; vertical-align: middle; }
+  @media (max-width: 52rem) { .panel { grid-template-columns: 1fr; } .panel:nth-of-type(even) .copy { order: 0; } .art { min-height: 0; } }
+
+  /* About */
+  .about { padding-block: clamp(4rem, 9vw, 8rem); }
+  .about .wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+  .about h2 { max-width: 14ch; }
+  .about p { color: var(--muted-dark); max-width: 32rem; margin-top: 1.5rem; }
+  .creed { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(244,240,227,.18); }
+  .creed li { display: flex; align-items: center; gap: 1rem; padding-block: 1.25rem; border-bottom: 1px solid rgba(244,240,227,.18); font: 500 clamp(1.1rem, 2vw, 1.5rem)/1.2 var(--display); letter-spacing: -.03em; }
+  .creed li::before { content: ""; width: .8rem; height: .8rem; background: var(--lime); transform: rotate(45deg); flex: none; }
+  @media (max-width: 52rem) { .about .wrap { grid-template-columns: 1fr; } }
+
+  /* Contact: the lime block is the loudest thing on the page, on purpose. */
+  .contact { background: var(--lime); color: var(--ink); padding-block: clamp(4rem, 9vw, 8rem) 2rem; }
+  .contact :focus-visible { outline-color: var(--ink); }
+  .contact h2 { font-size: clamp(2.2rem, 6.4vw, 5.6rem); max-width: 13ch; line-height: 1; }
+  .contact .mail { display: inline-block; margin-top: 2rem; font: 700 clamp(1.2rem, 3vw, 2.2rem)/1.2 var(--display); letter-spacing: -.03em; text-underline-offset: 8px; text-decoration-thickness: 3px; overflow-wrap: anywhere; }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: clamp(3rem, 7vw, 6rem); padding-top: 1.25rem; border-top: 1.5px solid rgba(10,14,22,.35); font-size: .95rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .draw { animation: none; stroke-dashoffset: 0; } .emblem .spin { animation: none; } * { transition: none !important; } html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><svg data-star></svg>Seshat Infotech</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a class="btn" href="#contact">Get in touch</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="emblem" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <circle class="ring" cx="100" cy="100" r="98" stroke-width=".4"/>
+        <circle class="ring" cx="100" cy="100" r="74" stroke-width=".4"/>
+        <g class="spin">
+          <path class="draw" id="s1" pathLength="1" stroke-width="1.1"/>
+          <path class="draw draw--b" id="s2" pathLength="1" stroke-width=".7"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap">
+      <h1 id="hero-title">Software that holds up.</h1>
+      <p class="lede">Seshat Infotech is a product company. We make TryOnMe, Collab and PathoGen, and we are building the next one.</p>
+      <div class="actions">
+        <a class="btn" href="#products">See our products</a>
+        <a class="btn btn--ghost" href="#contact">Talk to us</a>
+      </div>
+    </div>
+    <nav class="quick" aria-label="Products">
+      <div class="wrap">
+        <a href="#products">TryOnMe</a><a href="#products">Collab</a><a href="#products">PathoGen</a><a class="next" href="#products">More on the way</a>
+      </div>
+    </nav>
+  </section>
+
+  <section class="products" id="products" aria-labelledby="products-title">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="products-title">Our products</h2>
+        <p>Three in the world today. Every new product gets its own panel here.</p>
+      </div>
+
+      <article class="panel">
+        <div class="copy">
+          <h3>TryOnMe</h3>
+          <p class="tag">See the fit before you buy.</p>
+          <p class="desc">A phone camera becomes a fitting room. Shoppers see how a garment sits on their own body, and brands take the guesswork out of sizing.</p>
+          <a class="btn btn--ink" href="#contact">Ask about TryOnMe</a>
+        </div>
+        <div class="art"><svg data-art="tryonme" data-label="TryOnMe: a phone showing a garment fitted to a body with chest and waist measurements"></svg></div>
+      </article>
+
+      <article class="panel">
+        <div class="copy">
+          <h3>Collab</h3>
+          <p class="tag">One shared page for the whole team.</p>
+          <p class="desc">People, files and decisions in one place, so a project stops scattering across chat threads and inboxes.</p>
+          <a class="btn btn--ink" href="#contact">Ask about Collab</a>
+        </div>
+        <div class="art"><svg data-art="collab" data-label="Collab: a shared task list with two teammates' cursors"></svg></div>
+      </article>
+
+      <article class="panel">
+        <div class="copy">
+          <h3>PathoGen</h3>
+          <p class="tag">Pathology data, laid out for review.</p>
+          <p class="desc">Pathology and genomic results organised so specialists can check every call and trace it back to the evidence.</p>
+          <a class="btn btn--ink" href="#contact">Ask about PathoGen</a>
+        </div>
+        <div class="art"><svg data-art="pathogen" data-label="PathoGen: a grid of samples with flagged results and a magnifier"></svg></div>
+      </article>
+
+      <article class="panel panel--next">
+        <div class="copy">
+          <h3><span class="dot"></span>The next one</h3>
+          <p class="desc">A fourth product is in the works. Write to us if you want to hear when it is ready.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <div>
+        <h2 id="about-title">Named for the goddess of records.</h2>
+        <p>Seshat, in Egyptian myth, wrote down what mattered and measured the ground before anything was built on it. The star above her head is our mark. It is the only Egyptian thing about us.</p>
+      </div>
+      <ul class="creed">
+        <li>Write it down.</li>
+        <li>Measure first.</li>
+        <li>Build to last.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="contact" id="contact">
+  <div class="wrap">
+    <h2>Tell us what you want to build.</h2>
+    <a class="mail" href="mailto:hello@seshatinfotech.com">hello@seshatinfotech.com</a>
+    <div class="foot"><span>© 2026 Seshat Infotech</span><span>TryOnMe, Collab, PathoGen</span></div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+  // Big hero stars share the same geometry as the logo mark.
+  const toPath = (pts) => 'M' + pts + 'Z'
+  document.getElementById('s1').setAttribute('d', toPath(starPoints(100, 100, 92, 44)))
+  document.getElementById('s2').setAttribute('d', toPath(starPoints(100, 100, 74, 36, 7, -90 + 180 / 7)))
+</script>
+</body>
+</html>

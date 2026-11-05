@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seshat Infotech · Design options</title>
+<style>
+  :root { --ivory:#F4F0E3; --ink:#0A0E16; --muted:#55596A; --lime:#C6FF2B; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ivory); color: var(--ink); font: 1.0625rem/1.6 system-ui, sans-serif; padding: clamp(1.25rem, 5vw, 4rem); }
+  h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1; letter-spacing: -.03em; margin: 0 0 .75rem; }
+  p { color: var(--muted); max-width: 40rem; margin: 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; margin-top: 2.5rem; }
+  a { display: block; text-decoration: none; color: inherit; border: 2px solid var(--ink); border-radius: 1.2rem; padding: 1.5rem; transition: background .2s; }
+  a:hover, a:focus-visible { background: var(--lime); outline: none; }
+  a strong { display: block; font-size: 1.6rem; letter-spacing: -.02em; }
+  a span { display: block; margin-top: .5rem; color: var(--muted); font-size: .98rem; }
+  a:hover span { color: var(--ink); }
+</style>
+</head>
+<body>
+  <h1>Pick a direction.</h1>
+  <p>Same palette, same content, three different ways to put a company site together. Open each one, scroll all the way down, and try it on your phone too.</p>
+  <div class="grid">
+    <a href="a-ledger.html"><strong>A · Ledger</strong><span>Ivory page, big type, products listed as a register on a measuring ruler. Calm and editorial.</span></a>
+    <a href="b-midnight.html"><strong>B · Midnight</strong><span>Dark hero with a drawn star, ivory product panels, one loud lime contact block. Bold and techy.</span></a>
+    <a href="c-stage.html"><strong>C · Stage</strong><span>Ivory page with a pick-a-product showcase. Pick a product and it takes the stage. Friendly and clear.</span></a>
+  </div>
+</body>
+</html>

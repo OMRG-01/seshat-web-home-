@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seshat Infotech · Option C: Stage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #F4F0E3;
+    --ivory-2: #E8E3D1;
+    --ink: #0A0E16;
+    --muted: #55596A;
+    --muted-dark: #A9ADBA;
+    --lime: #C6FF2B;
+    --display: 'Familjen Grotesk', system-ui, sans-serif;
+    --body: 'DM Sans', system-ui, sans-serif;
+    --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ivory); color: var(--ink); font: 1.0625rem/1.62 var(--body); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, p { margin: 0; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; box-shadow: 0 0 0 6px var(--lime); }
+  .wrap { padding-inline: var(--gutter); max-width: 90rem; margin-inline: auto; }
+  .btn { display: inline-block; background: var(--lime); color: var(--ink); font: 700 1rem/1 var(--body); padding: 1rem 1.5rem; border-radius: .9rem; border: 0; text-decoration: none; cursor: pointer; transition: transform .15s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn--ink { background: var(--ink); color: var(--ivory); }
+
+  .nav { display: flex; align-items: center; justify-content: space-between; padding-block: 1.25rem; }
+  .brand { display: flex; align-items: center; gap: .7rem; font: 700 1.3rem/1 var(--display); text-decoration: none; letter-spacing: -.02em; }
+  .brand svg { width: 2rem; height: 2rem; }
+  .brand .star-shape { fill: var(--ink); }
+  .nav ul { display: flex; align-items: center; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+  .nav a:not(.btn) { text-decoration: none; font-weight: 500; }
+  .nav a:not(.btn):hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+  .nav .btn { padding: .8rem 1.2rem; }
+  @media (max-width: 40rem) { .nav li:not(:last-child) { display: none; } }
+
+  /* Hero: a sun disc with the star cut out of it. One shape carries the brand. */
+  .hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2rem; align-items: center; padding-block: clamp(2.5rem, 7vw, 6rem) clamp(3rem, 7vw, 6rem); }
+  h1 { font: 700 clamp(2.8rem, 7.4vw, 6.6rem)/.96 var(--display); letter-spacing: -.045em; max-width: 11ch; }
+  .lede { max-width: 33rem; margin-top: 1.8rem; color: var(--muted); font-size: clamp(1.08rem, 1.5vw, 1.25rem); }
+  .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+  .actions .btn--line { background: transparent; box-shadow: inset 0 0 0 2px var(--ink); }
+  .disc { justify-self: end; width: min(100%, 26rem); aspect-ratio: 1; border-radius: 50%; background: var(--lime); display: grid; place-items: center; box-shadow: 0 0 0 2px var(--ink); }
+  .disc svg { width: 64%; height: 64%; }
+  .disc .star-shape { fill: var(--ink); }
+  @media (max-width: 52rem) { .hero { grid-template-columns: 1fr; } .disc { justify-self: start; width: 11rem; order: -1; } }
+
+  /* Showcase: pick a product on the left, it takes the stage on the right. Adding a product adds a tab. */
+  .showcase { padding-block: clamp(2rem, 5vw, 4rem) clamp(4rem, 9vw, 8rem); }
+  h2 { font: 700 clamp(1.9rem, 4.2vw, 3.4rem)/1.02 var(--display); letter-spacing: -.04em; }
+  .showcase .head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 3rem; margin-bottom: 2rem; }
+  .showcase .head p { color: var(--muted); max-width: 24rem; }
+  .layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(1rem, 2.5vw, 2rem); align-items: stretch; }
+  .tabs { display: flex; flex-direction: column; gap: .75rem; }
+  .tab { position: relative; text-align: left; background: transparent; border: 2px solid var(--ink); border-radius: 1.2rem; padding: 1.2rem 1.4rem 1.2rem 1.6rem; cursor: pointer; transition: background .2s, color .2s; }
+  .tab::before { content: ""; position: absolute; left: .6rem; top: 1.2rem; bottom: 1.2rem; width: 4px; border-radius: 2px; background: transparent; }
+  .tab strong { display: block; font: 700 clamp(1.6rem, 3vw, 2.4rem)/1.05 var(--display); letter-spacing: -.035em; }
+  .tab span { display: block; margin-top: .3rem; font-size: .98rem; color: var(--muted); }
+  .tab:hover { background: var(--ivory-2); }
+  .tab[aria-selected="true"] { background: var(--ink); color: var(--ivory); }
+  .tab[aria-selected="true"]::before { background: var(--lime); }
+  .tab[aria-selected="true"] span { color: var(--muted-dark); }
+  .tab--next { border-style: dashed; border-color: var(--muted); color: var(--muted); cursor: default; }
+  .tab--next:hover { background: transparent; }
+  .stage { --art-line: var(--ivory); --art-soft: rgba(244,240,227,.12); --art-hi: var(--lime); --art-bg: var(--ink); background: var(--ink); color: var(--ivory); border-radius: 1.8rem; padding: clamp(1.25rem, 3vw, 2.5rem); min-height: 34rem; display: flex; }
+  .pane { display: flex; flex-direction: column; width: 100%; animation: swap .35s ease; }
+  .pane[hidden] { display: none; }
+  .pane .art { flex: 1; display: grid; place-items: center; padding-block: 1rem; }
+  .pane .art svg { width: 100%; max-width: 27rem; height: auto; }
+  .pane h3 { font: 700 clamp(1.8rem, 3.4vw, 2.6rem)/1 var(--display); letter-spacing: -.04em; }
+  .pane p { margin-top: .7rem; color: var(--muted-dark); max-width: 34rem; }
+  .pane .btn { margin-top: 1.4rem; align-self: flex-start; }
+  @keyframes swap { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (max-width: 52rem) {
+    .layout { grid-template-columns: 1fr; }
+    .tabs { flex-direction: row; overflow-x: auto; padding-bottom: .4rem; scroll-snap-type: x mandatory; }
+    .tab { flex: 0 0 auto; scroll-snap-align: start; padding: 1rem 1.2rem 1rem 1.4rem; }
+    .tab span { display: none; }
+    .stage { min-height: 0; }
+  }
+
+  /* About */
+  .about { background: var(--ivory-2); padding-block: clamp(4rem, 9vw, 7rem); }
+  .about .wrap { max-width: 50rem; text-align: left; }
+  .about .mini { width: 3.4rem; height: 3.4rem; background: var(--lime); border-radius: 50%; display: grid; place-items: center; box-shadow: 0 0 0 2px var(--ink); margin-bottom: 1.5rem; }
+  .about .mini svg { width: 62%; height: 62%; }
+  .about .mini .star-shape { fill: var(--ink); }
+  .about h2 { max-width: 16ch; }
+  .about p { margin-top: 1.4rem; color: var(--muted); max-width: 38rem; }
+
+  /* Contact */
+  .contact { background: var(--ink); color: var(--ivory); padding-block: clamp(4rem, 9vw, 7rem) 2rem; }
+  .contact :focus-visible { outline-color: var(--ivory); box-shadow: 0 0 0 6px var(--ink); }
+  .contact h2 { font-size: clamp(2.2rem, 6vw, 5rem); max-width: 14ch; }
+  .contact .row { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem 2rem; margin-top: 2rem; }
+  .contact .mail { font: 700 clamp(1.2rem, 2.8vw, 2rem)/1.2 var(--display); letter-spacing: -.02em; color: var(--lime); text-underline-offset: 6px; text-decoration-thickness: 2px; overflow-wrap: anywhere; }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: clamp(3rem, 7vw, 6rem); padding-top: 1.25rem; border-top: 1px solid rgba(244,240,227,.22); color: var(--muted-dark); font-size: .95rem; }
+
+  @media (prefers-reduced-motion: reduce) { .pane { animation: none; } * { transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="#top"><svg data-star></svg>Seshat Infotech</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a class="btn" href="#contact">Get in touch</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title">A growing family of products.</h1>
+        <p class="lede">Seshat Infotech builds software that people rely on every day. Today that means TryOnMe, Collab and PathoGen. Tomorrow, more.</p>
+        <div class="actions">
+          <a class="btn btn--ink" href="#products">See our products</a>
+          <a class="btn btn--line" href="#contact">Talk to us</a>
+        </div>
+      </div>
+      <div class="disc" aria-hidden="true"><svg data-star></svg></div>
+    </section>
+
+    <section class="showcase" id="products" aria-labelledby="products-title">
+      <div class="head">
+        <h2 id="products-title">Pick a product.</h2>
+        <p>Each one is its own product with its own team. Choose one to see what it does.</p>
+      </div>
+      <div class="layout">
+        <div class="tabs" role="tablist" aria-label="Products" aria-orientation="vertical">
+          <button class="tab" role="tab" id="tab-tryonme" aria-controls="pane-tryonme" aria-selected="true"><strong>TryOnMe</strong><span>See the fit before you buy.</span></button>
+          <button class="tab" role="tab" id="tab-collab" aria-controls="pane-collab" aria-selected="false" tabindex="-1"><strong>Collab</strong><span>One shared page for the whole team.</span></button>
+          <button class="tab" role="tab" id="tab-pathogen" aria-controls="pane-pathogen" aria-selected="false" tabindex="-1"><strong>PathoGen</strong><span>Pathology data, laid out for review.</span></button>
+          <div class="tab tab--next"><strong>Next</strong><span>In the works.</span></div>
+        </div>
+        <div class="stage">
+          <div class="pane" role="tabpanel" id="pane-tryonme" aria-labelledby="tab-tryonme">
+            <div class="art"><svg data-art="tryonme" data-label="TryOnMe: a phone showing a garment fitted to a body with chest and waist measurements"></svg></div>
+            <h3>TryOnMe</h3>
+            <p>A phone camera becomes a fitting room. Shoppers see how a garment sits on their own body, and brands take the guesswork out of sizing.</p>
+            <a class="btn" href="#contact">Ask about TryOnMe</a>
+          </div>
+          <div class="pane" role="tabpanel" id="pane-collab" aria-labelledby="tab-collab" hidden>
+            <div class="art"><svg data-art="collab" data-label="Collab: a shared task list with two teammates' cursors"></svg></div>
+            <h3>Collab</h3>
+            <p>People, files and decisions in one place, so a project stops scattering across chat threads and inboxes.</p>
+            <a class="btn" href="#contact">Ask about Collab</a>
+          </div>
+          <div class="pane" role="tabpanel" id="pane-pathogen" aria-labelledby="tab-pathogen" hidden>
+            <div class="art"><svg data-art="pathogen" data-label="PathoGen: a grid of samples with flagged results and a magnifier"></svg></div>
+            <h3>PathoGen</h3>
+            <p>Pathology and genomic results organised so specialists can check every call and trace it back to the evidence.</p>
+            <a class="btn" href="#contact">Ask about PathoGen</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<section class="about" id="about" aria-labelledby="about-title">
+  <div class="wrap">
+    <div class="mini" aria-hidden="true"><svg data-star></svg></div>
+    <h2 id="about-title">Why we are called Seshat.</h2>
+    <p>Seshat was the Egyptian goddess of writing and measure. She kept the records and laid out the plan before the building began. We try to work the same way: plan carefully, keep a clear record, and build things that last. Her seven-pointed star is our mark.</p>
+  </div>
+</section>
+
+<footer class="contact" id="contact">
+  <div class="wrap">
+    <h2>Tell us what you want to build.</h2>
+    <div class="row">
+      <a class="btn" href="mailto:hello@seshatinfotech.com">Email us</a>
+      <a class="mail" href="mailto:hello@seshatinfotech.com">hello@seshatinfotech.com</a>
+    </div>
+    <div class="foot"><span>© 2026 Seshat Infotech</span><span>TryOnMe, Collab, PathoGen</span></div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+  const tabs = [...document.querySelectorAll('[role="tab"]')]
+  function select(tab, focus) {
+    tabs.forEach((t) => {
+      const on = t === tab
+      t.setAttribute('aria-selected', on)
+      t.tabIndex = on ? 0 : -1
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on
+    })
+    if (focus) tab.focus()
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab))
+    tab.addEventListener('keydown', (e) => {
+      const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key]
+      if (step) { e.preventDefault(); select(tabs[(i + step + tabs.length) % tabs.length], true) }
+    })
+  })
+</script>
+</body>
+</html>
